@@ -1,6 +1,6 @@
 export type Ok<T> = [value: T, error: undefined];
 export type Err<E = Error> = [value: undefined, error: E];
-export type Result<T, E> = Ok<T> | Err<E>;
+export type Result<T, E = Error> = Ok<T> | Err<E>;
 
 export type MaybePromiseLike<T> = PromiseLike<T> | T;
 export type TryCatchReturnType<
