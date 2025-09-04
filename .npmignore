@@ -11,6 +11,7 @@ node_modules/
 biome.json
 .gitignore
 npm-debug.log
+pnpm-workspace.yaml
 rollup.config.mjs
 tsconfig.browser.json
 tsconfig.esm.json
