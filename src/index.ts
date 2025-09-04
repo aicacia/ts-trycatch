@@ -5,6 +5,7 @@ export {
 	isPromiseLike,
 	ok,
 	err,
+	type MaybePromiseLike,
 	type TryCatchReturnType,
 	type Result,
 	type Ok,
