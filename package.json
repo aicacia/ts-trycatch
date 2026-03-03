@@ -1,6 +1,6 @@
 {
 	"name": "@aicacia/trycatch",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "typesafe go like tuple results for async and sync code",
 	"repository": {
 		"type": "git",
@@ -26,35 +26,51 @@
 		"preCommit": "npm run format && npm run lint && npm run coverage",
 		"prepare": "husky"
 	},
-	"keywords": ["try", "catch", "ok", "err", "typesafe", "result", "promise"],
+	"keywords": [
+		"try",
+		"catch",
+		"ok",
+		"err",
+		"typesafe",
+		"result",
+		"promise"
+	],
 	"author": "Nathan Faucett",
 	"license": "(MIT OR Apache-2.0)",
 	"readmeFilename": "README.md",
 	"devDependencies": {
-		"@biomejs/biome": "1",
-		"@rollup/plugin-commonjs": "28",
-		"@rollup/plugin-node-resolve": "15",
-		"@rollup/plugin-terser": "0",
-		"@rollup/plugin-typescript": "12",
-		"@types/tape": "5",
-		"husky": "9",
-		"nyc": "17",
-		"rollup": "4",
-		"rollup-plugin-esm-import-to-url": "2",
-		"tap-nyc": "1",
-		"tap-spec": "5",
-		"tape": "5",
-		"ts-node": "10",
-		"tslib": "2",
-		"typedoc": "0",
-		"typescript": "5"
+		"@biomejs/biome": "^2.4.5",
+		"@rollup/plugin-commonjs": "^29.0.0",
+		"@rollup/plugin-node-resolve": "^16.0.3",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-typescript": "^12.3.0",
+		"@types/tape": "^5.8.1",
+		"husky": "^9.1.7",
+		"nyc": "^18.0.0",
+		"rollup": "^4.59.0",
+		"rollup-plugin-esm-import-to-url": "^2.1.0",
+		"tap-nyc": "^1.0.3",
+		"tap-spec": "^5.0.0",
+		"tape": "^5.9.0",
+		"ts-node": "^10.9.2",
+		"tslib": "^2.8.1",
+		"typedoc": "^0.28.17",
+		"typescript": "^5.9.3"
 	},
 	"peerDependencies": {
 		"tslib": "2"
 	},
 	"nyc": {
-		"include": ["src"],
-		"exclude": ["src/**/*.test.*", "src/**/*.benchmark.*"],
-		"extension": [".ts", ".tsx"]
+		"include": [
+			"src"
+		],
+		"exclude": [
+			"src/**/*.test.*",
+			"src/**/*.benchmark.*"
+		],
+		"extension": [
+			".ts",
+			".tsx"
+		]
 	}
 }

@@ -3,6 +3,7 @@ export {
 	tryPromise,
 	trycatch,
 	isPromiseLike,
+	hasPromiseTry,
 	ok,
 	err,
 	type MaybePromiseLike,

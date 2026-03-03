@@ -6,9 +6,10 @@ export type MaybePromiseLike<T> = PromiseLike<T> | T;
 export type TryCatchReturnType<
 	F extends () => MaybePromiseLike<unknown>,
 	E = Error,
-> = ReturnType<F> extends PromiseLike<infer T>
-	? PromiseLike<Result<T, E>>
-	: Result<ReturnType<F>, E>;
+> =
+	ReturnType<F> extends PromiseLike<infer T>
+		? PromiseLike<Result<T, E>>
+		: Result<ReturnType<F>, E>;
 
 export function ok<T>(value: T): Ok<T> {
 	return [value, undefined];
@@ -31,17 +32,43 @@ export function tryPromise<T, E = Error>(
 	return ok(result) as Result<T, E>;
 }
 
-export function tryFunction<
-	T,
-	F extends () => MaybePromiseLike<T> = () => MaybePromiseLike<T>,
-	E = Error,
->(fn: F): TryCatchReturnType<F, E> {
-	try {
-		return tryPromise(fn()) as never;
-	} catch (error) {
-		return err(error as E) as never;
+export const tryFunction = (() => {
+	if (hasPromiseTry()) {
+		return <
+			T,
+			F extends () => MaybePromiseLike<T> = () => MaybePromiseLike<T>,
+			E = Error,
+		>(
+			fn: F,
+		): TryCatchReturnType<F, E> => {
+			try {
+				const result = fn();
+				if (isPromiseLike(result)) {
+					return Promise.try(() => result)
+						.then(ok)
+						.catch(err) as never;
+				}
+				return tryPromise(result) as never;
+			} catch (error) {
+				return err(error as E) as never;
+			}
+		};
 	}
-}
+
+	return <
+		T,
+		F extends () => MaybePromiseLike<T> = () => MaybePromiseLike<T>,
+		E = Error,
+	>(
+		fn: F,
+	): TryCatchReturnType<F, E> => {
+		try {
+			return tryPromise(fn()) as never;
+		} catch (error) {
+			return err(error as E) as never;
+		}
+	};
+})();
 
 export function trycatch<
 	T,
@@ -57,6 +84,11 @@ export function trycatch(fn: unknown) {
 		return tryFunction(fn as never);
 	}
 	return tryPromise(fn);
+}
+
+export function hasPromiseTry(): boolean {
+	// biome-ignore lint/suspicious/noExplicitAny: check Promise.try function
+	return typeof (Promise as any).try === "function";
 }
 
 export function isPromiseLike<T>(value: unknown): value is PromiseLike<T> {
